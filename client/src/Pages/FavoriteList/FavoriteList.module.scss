@@ -1,0 +1,90 @@
+.favoriteList {
+  background-color: var(--page-color);
+  min-height: 100vh;
+  .listContainer {
+    padding: 100px 50px;
+    color: #fff;
+    .title {
+      font-weight: 700;
+      font-size: 40px;
+    }
+    .list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    //padding: 20px;
+    .listWrapper {
+      .favFilm {
+        -webkit-box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.07);
+        box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.07);
+        display: grid;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+      .favImgFimWrapper {
+        .favFilmImg {
+          width: 100%;
+        }
+      }
+      .favFilmDescWrapper {
+        padding: 10px;
+        .favFilmTitle {
+          font-size: 30px;
+        }
+        .filmInfo {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+          align-items: center;
+          .showMobile {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+          }
+        }
+        .filmDesc {
+          line-height: normal;
+          font-family: 500;
+          font-size: 16px;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}
+
+.listNotFound {
+  color: #fff;
+  padding: 100px 50px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .favFilm {
+    display: flex !important;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .list {
+    grid-template-columns: 1fr !important;
+  }
+  .filmInfo {
+    display: flex !important;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+    .showMobile {
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+  .favFilmTitle {
+    font-size: 20px !important;
+  }
+}

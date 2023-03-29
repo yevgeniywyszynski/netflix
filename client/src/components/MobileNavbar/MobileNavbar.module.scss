@@ -1,0 +1,19 @@
+.pagesLinkWrapperMobile {
+  position: absolute;
+  background-color: var(--page-color);
+  width: 100%;
+  left: 0;
+  transition: all 0.3s;
+  .linkList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 50px;
+    justify-content: center;
+    gap: 20px;
+    .link {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}

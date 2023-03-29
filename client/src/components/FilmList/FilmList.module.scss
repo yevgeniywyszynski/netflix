@@ -1,0 +1,49 @@
+.filmList {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  .listTitle {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 50px;
+  }
+  .listWrappper {
+    position: relative;
+    .sliderArrowLeft {
+      width: 50px;
+      height: 100%;
+      background-color: rgb(22, 22, 22, 0.5);
+      color: #fff;
+      position: absolute;
+      left: 0;
+      z-index: 99;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      cursor: pointer;
+    }
+    .sliderArrowRight {
+      width: 50px;
+      height: 100%;
+      background-color: rgb(22, 22, 22, 0.5);
+      color: #fff;
+      position: absolute;
+      right: 0;
+      z-index: 99;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      cursor: pointer;
+    }
+    .moviesContainer {
+      margin-left: 50px;
+      display: flex;
+      width: max-content;
+      gap: 5px;
+      margin-top: 10px;
+      transform: translateX(0px);
+      transition: all 0.7s ease;
+    }
+  }
+}
