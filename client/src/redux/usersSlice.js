@@ -60,3 +60,12 @@ export const { authentication, registerNewUser, setNotFound } =
   usersSlice.actions;
 
 export default usersSlice.reducer;
+
+/*
+Wycziścic redux
+W userSlice przechowywać:
+  - Czy zalogowany
+  - kto zalogowany w redux
+  - pobawic sie tym auth (facebook, github)
+  https://firebase.google.com/docs/auth?hl=pl
+*/

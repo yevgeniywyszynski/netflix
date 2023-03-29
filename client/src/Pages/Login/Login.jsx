@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { authentication, setNotFound } from "../../redux/usersSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { auth } from "../../firebaseConfig/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,8 +14,9 @@ export default function Login() {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const notFound = useSelector((state) => state.users.notFound);
+  //const notFound = useSelector((state) => state.users.notFound);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -22,8 +25,16 @@ export default function Login() {
       userEmail: userEmail,
       userPassword: userPassword,
     };
-    dispatch(authentication(newUserObj));
-    navigate("/home");
+    signInWithEmailAndPassword(auth, userEmail, userPassword)
+      .then((user) => {
+        setIsLoggedIn(true);
+        console.log(user);
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    //dispatch(authentication(newUserObj));
   };
 
   useEffect(() => {}, [userEmail, userPassword]);
@@ -43,12 +54,16 @@ export default function Login() {
         <form className={styles.loginFormWrapper}>
           <p className={styles.signTitle}>Sign In</p>
           <input
-            className={notFound ? styles.loginInputNotFound : styles.loginInput}
+            className={
+              isLoggedIn ? styles.loginInputNotFound : styles.loginInput
+            }
             type="email"
-            placeholder={notFound ? "USER NOT FOUND" : "Email or phone number"}
+            placeholder={
+              isLoggedIn ? "USER NOT FOUND" : "Email or phone number"
+            }
             onChange={(e) => {
               setUserEmail(e.target.value);
-              dispatch(setNotFound(false));
+              //dispatch(setNotFound(false));
             }}
           ></input>
           <input

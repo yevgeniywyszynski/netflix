@@ -19,7 +19,7 @@ export default function Register() {
     setEmail(emailRef.current.value);
   };
 
-  const handleFinish = (event) => {
+  const handleFinish = async (event) => {
     event.preventDefault();
 
     if (!email || !password || email.length === 0 || password.length === 0) {
@@ -32,9 +32,15 @@ export default function Register() {
       password: password,
       isAuth: true,
     };
-
-    dispatch(registerNewUser(newUserObj));
-    navigate("/home");
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredits) => {
+        console.log(userCredits);
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    //dispatch(registerNewUser(newUserObj));
   };
 
   return (
