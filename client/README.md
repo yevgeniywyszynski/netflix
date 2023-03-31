@@ -7,8 +7,8 @@
 <h1>Home Page</h1>
 <img src="public/pagescreen/homePage.png"/>
 
-<h1>Films Slider</h1>
-<img src="public/pagescreen/loginPage.png"/>
+<h1>Film Slider</h1>
+<img src="public/pagescreen/filmPage.png"/>
 
 <h1>Trailer Video</h1>
 <img src="public/pagescreen/trailer.png"/>
