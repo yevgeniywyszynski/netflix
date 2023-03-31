@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { authentication, setNotFound } from "../../redux/usersSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { auth } from "../../firebaseConfig/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -16,17 +13,8 @@ export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
-  //const notFound = useSelector((state) => state.users.notFound);
-
-  console.log("userEmail", userEmail);
-
   const handleLogin = (event) => {
     event.preventDefault();
-
-    let newUserObj = {
-      userEmail: userEmail,
-      userPassword: userPassword,
-    };
 
     signInWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
@@ -41,8 +29,6 @@ export default function Login() {
         setLoginErrorMessage(message);
       });
   };
-
-  useEffect(() => {}, [userEmail, userPassword]);
 
   return (
     <div className={styles.login}>
@@ -66,9 +52,10 @@ export default function Login() {
             placeholder={
               isLoggedIn ? loginErrorMessage : "Email or phone number"
             }
+            value={userEmail}
             onChange={(e) => {
               setUserEmail(e.target.value);
-              //dispatch(setNotFound(false));
+              setIsLoggedIn(false);
             }}
           ></input>
           <input
