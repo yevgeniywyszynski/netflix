@@ -10,13 +10,15 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   //const notFound = useSelector((state) => state.users.notFound);
+
+  console.log("userEmail", userEmail);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -25,16 +27,19 @@ export default function Login() {
       userEmail: userEmail,
       userPassword: userPassword,
     };
+
     signInWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
-        setIsLoggedIn(true);
         console.log(user);
         navigate("/home");
       })
       .catch((error) => {
+        setIsLoggedIn(true);
+        setUserEmail("");
         console.log(error.message);
+        let message = error.message.substring(22, error.message.length - 2);
+        setLoginErrorMessage(message);
       });
-    //dispatch(authentication(newUserObj));
   };
 
   useEffect(() => {}, [userEmail, userPassword]);
@@ -59,7 +64,7 @@ export default function Login() {
             }
             type="email"
             placeholder={
-              isLoggedIn ? "USER NOT FOUND" : "Email or phone number"
+              isLoggedIn ? loginErrorMessage : "Email or phone number"
             }
             onChange={(e) => {
               setUserEmail(e.target.value);
