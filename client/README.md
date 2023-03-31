@@ -8,7 +8,7 @@
 <img src="public/pagescreen/homePage.png"/>
 
 <h1>Film Slider</h1>
-<img src="public/pagescreen/filmPage.png"/>
+<img src="public/pagescreen/filmSlider.png"/>
 
 <h1>Trailer Video</h1>
 <img src="public/pagescreen/trailer.png"/>
