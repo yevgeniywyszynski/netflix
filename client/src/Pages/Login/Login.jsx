@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { authentication, setNotFound } from "../../redux/usersSlice";
+import { auth } from "../../firebaseConfig/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { provider } from "../../firebaseConfig/firebase";
+import { signIn } from "../../redux/usersSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+
+const errorMap = {
+  "auth/invalid-email": "Invalid email",
+  "auth/user-disabled": "User disabled",
+  "auth/user-not-found": "User not found",
+  "auth/wrong-password": "Wrong password",
+};
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,21 +21,35 @@ export default function Login() {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
-  const notFound = useSelector((state) => state.users.notFound);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   const handleLogin = (event) => {
     event.preventDefault();
 
-    let newUserObj = {
-      userEmail: userEmail,
-      userPassword: userPassword,
-    };
-    dispatch(authentication(newUserObj));
-    navigate("/home");
+    signInWithEmailAndPassword(auth, userEmail, userPassword)
+      .then((user) => {
+        dispatch(signIn(user));
+        navigate("/home");
+      })
+      .catch((error) => {
+        setIsLoggedIn(true);
+        setUserEmail("");
+        console.log(error.code);
+        let message = errorMap[error.code];
+        setLoginErrorMessage(message);
+      });
   };
 
-  useEffect(() => {}, [userEmail, userPassword]);
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className={styles.login}>
@@ -38,17 +61,28 @@ export default function Login() {
             alt="logoNetflix"
           />
         </Link>
+        <button
+          className={styles.loginGoogleBtn}
+          onClick={() => signInWithGoogle()}
+        >
+          Sign in with Google
+        </button>
       </div>
       <div className={styles.loginDesc}>
         <form className={styles.loginFormWrapper}>
           <p className={styles.signTitle}>Sign In</p>
           <input
-            className={notFound ? styles.loginInputNotFound : styles.loginInput}
+            className={
+              isLoggedIn ? styles.loginInputNotFound : styles.loginInput
+            }
             type="email"
-            placeholder={notFound ? "USER NOT FOUND" : "Email or phone number"}
+            placeholder={
+              isLoggedIn ? loginErrorMessage : "Email or phone number"
+            }
+            value={userEmail}
             onChange={(e) => {
               setUserEmail(e.target.value);
-              dispatch(setNotFound(false));
+              setIsLoggedIn(false);
             }}
           ></input>
           <input

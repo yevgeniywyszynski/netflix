@@ -65,7 +65,12 @@ export const Navbar = () => {
             <ArrowDropDown className={styles.navIcon} />
             <div className={styles.optionsWrapper}>
               <span className={styles.option}>Settings</span>
-              <span className={styles.option}>Logout</span>
+              <span
+                onClick={() => window.localStorage.clear()}
+                className={styles.option}
+              >
+                Logout
+              </span>
             </div>
           </div>
           <div className={styles.mobile}>
