@@ -1,3 +1,14 @@
+<p>
+Version one (without firebase) branch main
+1. npm install
+2. cd server
+3. node index.js
+
+The second version with firebase is on the branch
+feature/firebase-auth
+
+</p>
+
 <h1>Register Page</h1>
 <img src="client/public/pagescreen/registerPage.png"/>
 
