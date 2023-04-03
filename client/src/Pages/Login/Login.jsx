@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebaseConfig/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { provider } from "../../firebaseConfig/firebase";
+import { signIn } from "../../redux/usersSlice";
+import { useDispatch } from "react-redux";
+
+const errorMap = {
+  "auth/invalid-email": "Invalid email",
+  "auth/user-disabled": "User disabled",
+  "auth/user-not-found": "User not found",
+  "auth/wrong-password": "Wrong password",
+};
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -18,15 +29,25 @@ export default function Login() {
 
     signInWithEmailAndPassword(auth, userEmail, userPassword)
       .then((user) => {
-        console.log(user);
+        dispatch(signIn(user));
         navigate("/home");
       })
       .catch((error) => {
         setIsLoggedIn(true);
         setUserEmail("");
-        console.log(error.message);
-        let message = error.message.substring(22, error.message.length - 2);
+        console.log(error.code);
+        let message = errorMap[error.code];
         setLoginErrorMessage(message);
+      });
+  };
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -40,6 +61,12 @@ export default function Login() {
             alt="logoNetflix"
           />
         </Link>
+        <button
+          className={styles.loginGoogleBtn}
+          onClick={() => signInWithGoogle()}
+        >
+          Sign in with Google
+        </button>
       </div>
       <div className={styles.loginDesc}>
         <form className={styles.loginFormWrapper}>

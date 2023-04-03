@@ -27,20 +27,15 @@ export default function Register() {
       return window.location.reload();
     }
 
-    let newUserObj = {
-      email: email,
-      password: password,
-      isAuth: true,
-    };
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredits) => {
-        console.log(userCredits);
+        //console.log(userCredits);
+        dispatch(registerNewUser(userCredits));
         navigate("/home");
       })
       .catch((error) => {
         console.log(error.message);
       });
-    //dispatch(registerNewUser(newUserObj));
   };
 
   return (
