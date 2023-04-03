@@ -1,11 +1,12 @@
 <p>
-Version one (without firebase) branch main
-1. npm install
-2. cd server
-3. node index.js
+Version one (without firebase) is on the branch main<br>
+1. npm install<br>
+2. cd server<br>
+3. node index.js<br>
+4. npm run start <br>
 
-The second version with firebase is on the branch
-feature/firebase-auth
+The second version with firebase is on the branch<br>
+feature/firebase-auth<br>
 
 </p>
 
