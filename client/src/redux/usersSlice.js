@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loginUserlist: null,
+  userLoginState: null,
 
   notFound: false,
   isLoggedIn: false,
@@ -26,7 +26,7 @@ export const usersSlice = createSlice({
       console.log("REGISTER_USER", registerUserData);
 
       state.isLoggedIn = true;
-      state.loginUserlist = registerUserData;
+      state.userLoginState = registerUserData;
     },
 
     signIn: (state, action) => {
@@ -40,7 +40,7 @@ export const usersSlice = createSlice({
       };
 
       state.isLoggedIn = true;
-      state.loginUserlist = loginUserData;
+      state.userLoginState = loginUserData;
     },
   },
 });
